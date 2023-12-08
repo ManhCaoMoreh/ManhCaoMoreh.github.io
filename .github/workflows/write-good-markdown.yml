@@ -1,0 +1,20 @@
+on:
+  push:
+    branches:
+      - write-good 
+
+name: "write good markdown files"
+permissions: {}
+
+jobs:
+  shellcheck:
+    name: Shellcheck
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Use Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '21.x' 
+      - run: npm install -g write-good
+      - run: find . -type f -name "*.md" | xargs npx write-good 
